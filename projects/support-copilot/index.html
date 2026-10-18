@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Support Copilot — Sang Cao</title>
+    <meta
+      name="description"
+      content="A citation-aware AI support assistant that turns an uploaded PDF into a grounded, verifiable Q&A session."
+    />
+    <link rel="canonical" href="https://sangcnt.github.io/projects/support-copilot/" />
+    <link rel="icon" href="../../sang-profile.jpg" />
+    <link rel="stylesheet" href="../../style.css" />
+  </head>
+  <body>
+    <main>
+      <p class="muted"><a href="../../">← Sang Cao</a></p>
+      <h1>Support Copilot</h1>
+      <p class="role">
+        A citation-aware AI support assistant that turns an uploaded PDF into a grounded, verifiable
+        Q&amp;A session.
+      </p>
+      <ul class="links">
+        <li><a href="https://demo.sangcaolabs.com/support-copilot/">Live demo</a></li>
+      </ul>
+      <p class="tags" style="margin-top: 12px">RAG · Laravel · FastAPI · React · PostgreSQL · OpenAI</p>
+
+      <h2>What it proves</h2>
+      <p>
+        Support Copilot turns an uploaded product or policy PDF into a temporary document session. A
+        visitor can review the source PDF beside the conversation, ask questions, and inspect the
+        exact passages used to produce each answer.
+      </p>
+      <p>
+        The project is built to demonstrate more than a basic LLM integration. Document ingestion,
+        grounded retrieval, verifiable citations, safe fallback, quota controls, asynchronous
+        processing, and operational visibility are all part of the product boundary.
+      </p>
+
+      <h2>Capabilities</h2>
+      <ul>
+        <li>Public, no-sign-up PDF assistant</li>
+        <li>Processed document preview with highlighted answer references</li>
+        <li>Grounded, streaming answers with validated citations</li>
+        <li>Honest fallback when the knowledge base lacks sufficient evidence</li>
+        <li>Global public demo quota and higher-quota access passes</li>
+        <li>Temporary document and session lifecycle with administrator cleanup</li>
+        <li>Feedback, usage, latency, and estimated cost reporting</li>
+        <li>Retrieval and answer-quality evaluation</li>
+      </ul>
+
+      <h2>Architecture</h2>
+      <p>
+        The browser talks to a Laravel business API. Laravel owns anonymous sessions, document
+        authorization, quota enforcement, storage, queues, and application records. A private
+        FastAPI service owns document processing and the AI workflow. PostgreSQL stores application
+        data and vector embeddings, while Redis supports queues and short-lived state.
+      </p>
+      <p>
+        Splitting the two services keeps the AI workflow replaceable: the provider sits behind an
+        application-level boundary, so the business API never depends on a specific model vendor.
+      </p>
+
+      <h2>Stack</h2>
+      <ul>
+        <li>React 19.2, TypeScript 6, Vite 8.2</li>
+        <li>PHP 8.5, Laravel 13</li>
+        <li>Python 3.13, FastAPI</li>
+        <li>PostgreSQL 18 with pgvector 0.8.2</li>
+        <li>Redis 8.4</li>
+        <li>Nginx, Docker Compose</li>
+        <li>OpenAI behind an application-level provider boundary</li>
+      </ul>
+
+      <h2>Status</h2>
+      <p>
+        The repository foundation, public product shell, core Laravel domain model, anonymous
+        document ownership, administrator API, automated checks, and live container topology are in
+        place. Visitors can upload a PDF into private storage, restore it within their anonymous
+        session, preview it through an authorized source endpoint, and remove it.
+      </p>
+      <p>
+        A separate request hands the authorized PDF from Laravel to FastAPI, which extracts
+        normalized text with page and line coordinates, creates deterministic token-aware chunks with
+        traceable source ranges, and generates bounded batches of embeddings. Persistence,
+        asynchronous processing, retrieval, and live chat are being delivered incrementally.
+      </p>
+
+      <footer class="site-footer">
+        © Sang Cao · <a href="mailto:sangcaolabs@gmail.com">sangcaolabs@gmail.com</a>
+      </footer>
+    </main>
+  </body>
+</html>
